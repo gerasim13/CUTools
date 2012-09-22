@@ -91,15 +91,15 @@
                         message:(NSString*)message
                    cancelButton:(NSString*)cancelButton
                 andOtherButtons:(NSString*)otherButtonTitles, ... {
-    return [[CUAlertView alloc] initWithTarget:target
-                                        action:action
-                                  cancelAction:cancelAction
-                             activityIndicator:withAcIndicator
-                                        object:object
-                                         title:title
-                                       message:message
-                                  cancelButton:cancelButton
-                               andOtherButtons:otherButtonTitles];
+    return [[[CUAlertView alloc] initWithTarget:target
+                                         action:action
+                                   cancelAction:cancelAction
+                              activityIndicator:withAcIndicator
+                                         object:object
+                                          title:title
+                                        message:message
+                                   cancelButton:cancelButton
+                                andOtherButtons:otherButtonTitles] autorelease];
 }
 
 + (void)showAlertWithTarget:(id)target
@@ -121,7 +121,6 @@
                                          cancelButton:cancelButton
                                       andOtherButtons:otherButtonTitles];
 	[alert show];
-	[alert release];
 }
 
 + (void)showAlertWithTarget:(id)target
@@ -279,9 +278,6 @@
 
 - (void)addTextField:(CUTextField*)textField {
 	[self addSubview:textField];
-//	CGSize newSize  = [self getMessageSize];
-//	CGRect newFrame = CGRectMake(0, 0, newSize.width, textField.frame.size.height);
-//	[textField setFrame:newFrame];
 }
 
 - (void)addTextView:(CUTextView*)textView {

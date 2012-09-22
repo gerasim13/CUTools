@@ -34,8 +34,10 @@
     // release graphics context
     CGContextRelease(context);
     // make UIImage from grayscale image with alpha mask
-    UIImage *grayScaleImage = [UIImage imageWithCGImage:CGImageCreateWithMask(grayImage, mask) scale:self.scale orientation:self.imageOrientation];
+    CGImageRef grayScale = CGImageCreateWithMask(grayImage, mask);
+    UIImage *grayScaleImage = [UIImage imageWithCGImage:grayScale scale:self.scale orientation:self.imageOrientation];
     // release the CG images
+    CGImageRelease(grayScale);
     CGImageRelease(grayImage);
     CGImageRelease(mask);
     // return the new grayscale image

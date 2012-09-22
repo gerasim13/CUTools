@@ -149,7 +149,12 @@
 #pragma mark Remove
 
 - (NSArray*)arrayByRemovingObjectAtIndex:(NSUInteger)index {
-    
+    if (self.count > index) {
+        NSMutableArray *tmpArray = [NSMutableArray arrayWithArray:self];
+        [tmpArray removeObjectAtIndex:index];
+        return tmpArray;
+    }
+    return nil;
 }
 
 
