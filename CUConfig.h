@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 #define SHARED_INSTANCE_USING_BLOCK(block) \
 static dispatch_once_t pred = 0; \

@@ -79,24 +79,45 @@
 - (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
                                   bounds:(CGSize)bounds
                     interpolationQuality:(CGInterpolationQuality)quality {
-    CGFloat horizontalRatio = bounds.width / self.size.width;
-    CGFloat verticalRatio = bounds.height / self.size.height;
+    CGFloat horizontalRatio;
+    CGFloat verticalRatio;
     CGFloat ratio;
+    CGSize  newSize;
     
     switch (contentMode) {
-        case UIViewContentModeScaleAspectFill:
-            ratio = MAX(horizontalRatio, verticalRatio);
+        case UIViewContentModeScaleToFill:
+            horizontalRatio = self.size.width  / bounds.width;
+            verticalRatio   = self.size.height / bounds.height;
             break;
             
+        default:
+            horizontalRatio = bounds.width  / self.size.width;
+            verticalRatio   = bounds.height / self.size.height;
+            break;
+    }
+    
+    switch (contentMode) {
         case UIViewContentModeScaleAspectFit:
             ratio = MIN(horizontalRatio, verticalRatio);
+            break;
+            
+        case UIViewContentModeScaleToFill:
+        case UIViewContentModeScaleAspectFill:
+            ratio = MAX(horizontalRatio, verticalRatio);
             break;
             
         default:
             [NSException raise:NSInvalidArgumentException format:@"Unsupported content mode: %d", contentMode];
     }
     
-    CGSize newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
+    switch (contentMode) {
+        case UIViewContentModeScaleToFill:
+            newSize = CGSizeMake(bounds.width * ratio, bounds.height * ratio);
+            break;
+        default:
+            newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
+            break;
+    }
     
     return [self resizedImage:newSize interpolationQuality:quality];
 }
