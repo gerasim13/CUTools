@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface NSDictionary (Archive)
-- (NSString*)archive;
-+ (NSDictionary*)unacrhive:(NSString*)path;
+- (NSString*)archiveToFile;
++ (NSDictionary*)unacrhiveFromFile:(NSString*)path;
+- (void)archiveWithIdentifier:(NSString*)identifier;
++ (NSDictionary*)unarchiverWithIdentifier:(NSString*)identifier;
+
 @end

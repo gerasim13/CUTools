@@ -9,14 +9,17 @@
 #import "NSDictionary+Archive.h"
 
 @implementation NSDictionary (Archive)
-- (NSString*)tempPath {
+
+- (NSString*)tempPath
+{
     NSString *tmpPath = [NSString stringWithFormat:@"%@nsdictionary", NSTemporaryDirectory()];
     // Cleanup
     [[NSFileManager defaultManager] removeItemAtPath:tmpPath error:NULL];
     return tmpPath;
 }
 
-- (NSString*)archive {
+- (NSString*)archiveToFile
+{
     NSMutableData   *data     = [[NSMutableData alloc]init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
     NSString        *path     = [self tempPath];
@@ -29,7 +32,8 @@
     return path;
 }
 
-+ (NSDictionary*)unacrhive:(NSString*)path {
++ (NSDictionary*)unacrhiveFromFile:(NSString*)path
+{
     NSData            *data       = [[NSMutableData alloc]initWithContentsOfFile:path];
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
     NSDictionary      *dictionaty = [unarchiver decodeObjectForKey:@"NSDictionary"];
@@ -40,6 +44,23 @@
     return dictionaty;
 }
 
+- (void)archiveWithIdentifier:(NSString*)identifier
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:identifier];
+}
+
++ (NSDictionary*)unarchiverWithIdentifier:(NSString*)identifier
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
+    if (data != nil) {
+        NSDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (dictionary != nil && [dictionary isKindOfClass:[NSDictionary class]]) {
+            return [NSDictionary dictionaryWithDictionary:dictionary];
+        }
+    }
+    return [NSDictionary dictionary];
+}
 
 
 @end

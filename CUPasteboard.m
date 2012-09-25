@@ -76,7 +76,7 @@ static void AddInfoToString(const void *_key, const void *_value, void *_context
 }
 
 - (void)copyDictionary:(NSDictionary*)dictionary toClipboard:(UIPasteboard*)board {
-    NSString *path = [dictionary archive];
+    NSString *path = [dictionary archiveToFile];
     [board setValue:path forPasteboardType:(NSString*)kUTTypeUTF8PlainText];
 }
 
@@ -144,7 +144,7 @@ static void AddInfoToString(const void *_key, const void *_value, void *_context
 
 - (NSDictionary*)dictionaryFromClipBoard:(UIPasteboard*)board {
     NSString *path = [board valueForPasteboardType:(NSString*)kUTTypeUTF8PlainText];
-    NSDictionary *dic = [NSDictionary unacrhive:path];
+    NSDictionary *dic = [NSDictionary unacrhiveFromFile:path];
     return dic;
 }
 
