@@ -54,7 +54,7 @@
     return ([imageFilename rangeOfString:type options:NSCaseInsensitiveSearch].location != NSNotFound);
 }
 
-#pragma CUDataLoader delegate
+#pragma mark CUDataLoader delegate
 
 - (void)dataLoaded:(CUDataLoader*)dataLoader {
     UIImage *image           = [dataLoader responseImage];
