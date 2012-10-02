@@ -238,7 +238,7 @@
         }
     }
     
-	if (buttonIndex!=[alertView cancelButtonIndex]&&[target_ respondsToSelector:action_]) {
+	if (buttonIndex != [alertView cancelButtonIndex] && [target_ respondsToSelector:action_]) {
 		NSMutableDictionary *values = [[NSMutableDictionary dictionary] retain];
 		for (CUTextField *textField in [alertView subviews]) {
 			if ([textField respondsToSelector:@selector(name)] && textField.name!=nil) {
@@ -265,7 +265,11 @@
 		}
         [values release];
 	} else if ([target_ respondsToSelector:cancelAction_]) {
-        [target_ performSelector:cancelAction_];
+        if (object_ != [NSNull null] && object_ != nil) {
+            [target_ performSelector:cancelAction_ withObject:object_];
+        } else {
+            [target_ performSelector:cancelAction_];
+        }
     }
 }
 
