@@ -84,6 +84,12 @@
     CGFloat ratio;
     CGSize  newSize;
     
+    BOOL hasRetina = ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0));
+    if (hasRetina) {
+        bounds.width  = ceil(bounds.width  * 2);
+        bounds.height = ceil(bounds.height * 2);
+    }
+    
     switch (contentMode) {
         case UIViewContentModeScaleToFill:
             horizontalRatio = self.size.width  / bounds.width;

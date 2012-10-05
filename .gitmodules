@@ -1,3 +1,6 @@
 [submodule "Cocoa Extensions/NSString+MD5"]
 	path = Cocoa Extensions/NSString+MD5
 	url = https://github.com/gerasim13/NSString-MD5
+[submodule "Cocoa Extensions/NSString+Random"]
+	path = Cocoa Extensions/NSString+Random
+	url = git://gist.github.com/3834111.git
