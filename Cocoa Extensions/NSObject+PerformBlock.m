@@ -20,6 +20,16 @@
     }
 }
 
+- (void)performBlock:(void (^)(id arg))block withObject:(id)object afterDelay:(double)delay
+{
+    if (delay > 0) {
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delay * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{  block(object); });
+    } else {
+        block(object);
+    }
+}
+
 - (void)performBlock:(void (^)())block
 {
     [self performBlock:block afterDelay:0];
