@@ -7,3 +7,6 @@
 [submodule "Cocoa Extensions/NSObject+Blocks"]
 	path = Cocoa Extensions/NSObject+Blocks
 	url = git://gist.github.com/955123.git
+[submodule "Cocoa Extensions/NSFileManager+DoNotBackup"]
+	path = Cocoa Extensions/NSFileManager+DoNotBackup
+	url = git://gist.github.com/1999985.git
