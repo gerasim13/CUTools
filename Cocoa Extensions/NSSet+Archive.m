@@ -7,38 +7,16 @@
 //
 
 #import "NSSet+Archive.h"
+#import "NSSet+Compare.h"
 
 @implementation NSSet (Archive)
 
-- (BOOL)containsKeyedObject:(NSObject*)object
++ (id)setWithIdentifier:(NSString*)identifier
 {
-    for (NSObject *_object in self) {
-        if ([object isEqual:_object]) {
-            return YES;
-        }
-    }
-    return NO;
+    return [self unarchiverSetWithIdentifier:identifier];
 }
 
-- (void)addObject:(NSObject*)object toSetWithIdentifier:(NSString*)identifier
-{
-    NSSet        *set    = [NSSet unarchiverSetWithIdentifier:identifier];
-    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
-    // Search for duplicete of movie
-    if (![self containsKeyedObject:object]) {
-        // Add movie
-        [mutSet addObject:object];
-        [mutSet archiveWithIdentifier:identifier];
-    }
-}
-
-- (void)archiveWithIdentifier:(NSString*)identifier
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:identifier];
-}
-
-+ (NSSet*)unarchiverSetWithIdentifier:(NSString*)identifier
++ (id)unarchiverSetWithIdentifier:(NSString*)identifier
 {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
     if (data != nil) {
@@ -48,6 +26,53 @@
         }
     }
     return [NSSet set];
+}
+
++ (BOOL)addObject:(id)object toSetWithIdentifier:(NSString*)identifier
+{
+    NSSet        *set    = [self setWithIdentifier:identifier];
+    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
+    if (![mutSet containsIdenticalObject:object]) {
+        // Add object
+        [mutSet addObject:object];
+        [mutSet archiveWithIdentifier:identifier];
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)removeObject:(id)object fromSetWithIdentifier:(NSString*)identifier
+{
+    NSSet        *set    = [self setWithIdentifier:identifier];
+    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
+    if ([mutSet containsObject:object]) {
+        // Remove object
+        [mutSet removeObject:object];
+        [mutSet archiveWithIdentifier:identifier];
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)updateObject:(id)object inSetWithIdentifier:(NSString*)identifier
+{
+    NSSet        *set    = [self setWithIdentifier:identifier];
+    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
+    NSObject     *oldObj = [set identicalObject:object];
+    if (oldObj) {
+        // Replace object
+        [mutSet removeObject:oldObj];
+        [mutSet addObject:object];
+        [mutSet archiveWithIdentifier:identifier];
+        return YES;
+    }
+    return NO;
+}
+
+- (void)archiveWithIdentifier:(NSString*)identifier
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:identifier];
 }
 
 @end
