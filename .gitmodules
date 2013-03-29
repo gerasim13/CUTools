@@ -10,3 +10,9 @@
 [submodule "Cocoa Extensions/NSFileManager+DoNotBackup"]
 	path = Cocoa Extensions/NSFileManager+DoNotBackup
 	url = git://gist.github.com/1999985.git
+[submodule "Cocoa Extensions/UIKitCategoryAdditions"]
+	path = Cocoa Extensions/UIKitCategoryAdditions
+	url = git://github.com/MugunthKumar/UIKitCategoryAdditions.git
+[submodule "Cocoa Extensions/UIKitAdditions"]
+	path = Cocoa Extensions/UIKitAdditions
+	url = https://github.com/gerasim13/UIKit-Additions.git
