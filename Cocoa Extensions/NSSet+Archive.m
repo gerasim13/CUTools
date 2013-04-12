@@ -28,6 +28,13 @@
     return [NSSet set];
 }
 
+- (void)archiveWithIdentifier:(NSString*)identifier
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:identifier];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 + (BOOL)addObject:(id)object toSetWithIdentifier:(NSString*)identifier
 {
     NSSet        *set    = [self setWithIdentifier:identifier];
@@ -67,12 +74,6 @@
         return YES;
     }
     return NO;
-}
-
-- (void)archiveWithIdentifier:(NSString*)identifier
-{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:identifier];
 }
 
 @end

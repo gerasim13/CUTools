@@ -9,7 +9,6 @@
 #import "UIImageView+CUImageCache.h"
 #import "UIImage+Resize.h"
 #import "UIImage+RoundedCorner.h"
-#import "CUImageCache.h"
 
 @implementation UIImageView (CUImageCache)
 
