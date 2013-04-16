@@ -21,7 +21,7 @@
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
     if (data != nil) {
         NSSet *set = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        if (set != nil && [set isKindOfClass:[NSSet class]]) {
+        if (set && [set isKindOfClass:[NSSet class]]) {
             return [NSSet setWithSet:set];
         }
     }

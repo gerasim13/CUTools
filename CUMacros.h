@@ -11,6 +11,8 @@
 
 // System version
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] floatValue] >= v)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] floatValue] <= v)
+#define IS_IOS5_OR_LESS SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(5.9)
 #define IS_IOS5_OR_GREATER SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(5.0)
 #define IS_IOS6_OR_GREATER SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(6.0)
 

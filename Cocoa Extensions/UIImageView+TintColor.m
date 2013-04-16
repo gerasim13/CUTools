@@ -25,6 +25,7 @@ static char const * const originalImageKey = "OriginalImage";
 
 - (void)dealloc {
     self.originalImage = nil;
+    [super dealloc];
 }
 
 - (void)setTintColor:(UIColor*)tintColor {
