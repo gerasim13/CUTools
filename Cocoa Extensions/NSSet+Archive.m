@@ -20,12 +20,12 @@
 {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
     if (data != nil) {
-        NSSet *set = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        if (set && [set isKindOfClass:[NSSet class]]) {
-            return [NSSet setWithSet:set];
+        id set = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (set) {
+            return set;
         }
     }
-    return [NSSet set];
+    return [self set];
 }
 
 - (void)archiveWithIdentifier:(NSString*)identifier
@@ -37,12 +37,11 @@
 
 + (BOOL)addObject:(id)object toSetWithIdentifier:(NSString*)identifier
 {
-    NSSet        *set    = [self setWithIdentifier:identifier];
-    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
-    if (![mutSet containsIdenticalObject:object]) {
+    NSMutableSet *set = [NSMutableSet setWithIdentifier:identifier];
+    if (![set containsIdenticalObject:object]) {
         // Add object
-        [mutSet addObject:object];
-        [mutSet archiveWithIdentifier:identifier];
+        [set addObject:object];
+        [set archiveWithIdentifier:identifier];
         return YES;
     }
     return NO;
@@ -50,12 +49,11 @@
 
 + (BOOL)removeObject:(id)object fromSetWithIdentifier:(NSString*)identifier
 {
-    NSSet        *set    = [self setWithIdentifier:identifier];
-    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
-    if ([mutSet containsObject:object]) {
+    NSMutableSet *set = [NSMutableSet setWithIdentifier:identifier];
+    if ([set containsObject:object]) {
         // Remove object
-        [mutSet removeObject:object];
-        [mutSet archiveWithIdentifier:identifier];
+        [set removeObject:object];
+        [set archiveWithIdentifier:identifier];
         return YES;
     }
     return NO;
@@ -63,14 +61,13 @@
 
 + (BOOL)updateObject:(id)object inSetWithIdentifier:(NSString*)identifier
 {
-    NSSet        *set    = [self setWithIdentifier:identifier];
-    NSMutableSet *mutSet = [NSMutableSet setWithSet:set];
+    NSMutableSet *set = [NSMutableSet setWithIdentifier:identifier];
     NSObject     *oldObj = [set identicalObject:object];
     if (oldObj) {
         // Replace object
-        [mutSet removeObject:oldObj];
-        [mutSet addObject:object];
-        [mutSet archiveWithIdentifier:identifier];
+        [set removeObject:oldObj];
+        [set addObject:object];
+        [set archiveWithIdentifier:identifier];
         return YES;
     }
     return NO;

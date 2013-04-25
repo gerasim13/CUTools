@@ -13,7 +13,7 @@
 - (BOOL)containsIdenticalObject:(NSObject*)object
 {
     NSObject *obj = [self identicalObject:object];
-    return (obj != nil);
+    return (obj);
 }
 
 - (id)identicalObject:(NSObject*)object
